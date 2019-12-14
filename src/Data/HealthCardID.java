@@ -1,6 +1,7 @@
-package data;
+package Data;
 
-import dataExceptions.NullObjectException;
+import Data.DataExceptions.BadFormatException;
+import Data.DataExceptions.NullObjectException;
 
 /**
  * The personal identifying code in the National Health Service.
@@ -8,9 +9,9 @@ import dataExceptions.NullObjectException;
 final public class HealthCardID {
     private final String personalID;
 
-    public HealthCardID(String code) throws NullObjectException {
+    public HealthCardID(String code) throws NullObjectException, BadFormatException {
         if(code == null) throw new NullObjectException("Code is null.");
-        if(!codeIsValid(code)) throw new NullObjectException("Invalid code.");
+        if(!codeIsValid(code)) throw new BadFormatException("Invalid code.");
         this.personalID = code;
     }
 
@@ -19,10 +20,11 @@ final public class HealthCardID {
     }
 
     private boolean codeIsValid(String code){
+        if(code.length() != 16) return false;
         char [] array = new char[16];
-        code.getChars(0,3, array, 0);
+        code.getChars(0,16, array, 0);
         for(int i = 0; i < 4; i++){
-            if (!Character.isAlphabetic(array[i])) return false;
+            if (!Character.isUpperCase(array[i])) return false;
         }
         for(int i = 4; i < 16; i++){
             if (!Character.isDigit(array[i])) return false;

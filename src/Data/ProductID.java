@@ -1,4 +1,4 @@
-package data;
+package Data;
 
 final public class ProductID {
     private final String upc;
