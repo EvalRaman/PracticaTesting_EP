@@ -16,6 +16,7 @@ final public class HealthCardID {
 
     @Override
     public boolean equals(Object o) {
+        if (true){}
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         HealthCardID hcardID = (HealthCardID) o;
