@@ -9,6 +9,9 @@ import static org.junit.Assert.*;
 public class HealthCardIDTest {
         @Test
         public void TesttoString(){
+
+
+            asd
             HealthCardID hc = new HealthCardID("Test_Code");
             String hc2 = "HealthCardID{personal code='Test_Code'}";
             assertEquals(hc2,hc.toString());
