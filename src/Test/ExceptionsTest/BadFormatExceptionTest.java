@@ -1,26 +1,25 @@
 package Test.ExceptionsTest;
 
-import Data.DataExceptions.BadFormatException;
+import Data.Exceptions.BadFormatException;
 import Data.HealthCardID;
+import Data.ProductID;
 import org.junit.Test;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BadFormatExceptionTest {
 
 
     @Test
-    public void exceptionTesting(){
-        Throwable exception = assertThrows(BadFormatException.class,
-                () -> {
-                    throw new BadFormatException("Invalid code format.");
-                });
-        assertEquals("Invalid code format.", exception.getMessage());
+    public void LengthTest(){
+        assertThrows(BadFormatException.class, () -> {new HealthCardID("");});
     }
 
     @Test
-    public void BadFormatTest(){
-        assertThrows(BadFormatException.class, () -> {new HealthCardID("9132ASDBAS");});
-    }
+    public void LettersTest(){ assertThrows(BadFormatException.class, () -> {new HealthCardID("AB/D123456789012");}); }
 
+    @Test
+    public void DigitsTest() { assertThrows(BadFormatException.class, () -> {new HealthCardID("ABCD123456A89012");}); }
+
+    @Test
+    public void UPCTest() { assertThrows(BadFormatException.class, () -> {new ProductID("");}); }
 }

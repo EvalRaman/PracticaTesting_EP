@@ -1,14 +1,24 @@
 package Data;
 
-final public class ProductID {
-    private final String upc;
+import Data.Exceptions.BadFormatException;
+import Data.Exceptions.NullObjectException;
 
-    public ProductID(String code) {
-        this.upc = code;
+final public class ProductID {
+    private final String UPC;
+
+    public ProductID(String code) throws NullObjectException, BadFormatException{
+        if(code == null) throw new NullObjectException("UPC code is null.");
+        if(!codeIsValid(code)) throw new BadFormatException("UPC code length is less than 12.");
+        this.UPC = code;
     }
 
-    public String getupc() {
-        return upc;
+
+    private boolean codeIsValid(String code){
+        return code.length() == 12;
+    }
+
+    public String getUPC() {
+        return UPC;
     }
 
     @Override
@@ -16,16 +26,16 @@ final public class ProductID {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProductID productID = (ProductID) o;
-        return upc.equals(productID.upc);
+        return UPC.equals(productID.UPC);
     }
 
     @Override
     public int hashCode() {
-        return upc.hashCode();
+        return UPC.hashCode();
     }
 
     @Override
     public String toString() {
-        return "ProductID{" + "Universal Product Code='" + upc + '\'' + '}';
+        return "ProductID{" + "Universal Product Code='" + UPC + '\'' + '}';
     }
 }

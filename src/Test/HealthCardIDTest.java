@@ -2,10 +2,8 @@ package Test;
 
 
 import Data.HealthCardID;
-import Data.DataExceptions.BadFormatException;
-import Data.DataExceptions.NullObjectException;
+import Data.Exceptions.*;
 import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import static org.junit.Assert.*;
 
@@ -18,8 +16,8 @@ public class HealthCardIDTest {
         }
 
         @Test
-        public void toStringTest(){
-            assertEquals("HealthCardID{" + "personal code='" + "ABCD123456789012" + '\'' + '}', hc.toString());
+        public void getPersonalIDTest(){
+            assertEquals("ABCD123456789012", hc.getPersonalID());
         }
 
         @Test
@@ -30,6 +28,11 @@ public class HealthCardIDTest {
         @Test
         public void hashCodeTest() throws NullObjectException, BadFormatException{
             assertEquals(new HealthCardID("ABCD123456789012").hashCode(), hc.hashCode());
+        }
+
+        @Test
+        public void toStringTest(){
+            assertEquals("HealthCardID{" + "personal code='" + "ABCD123456789012" + '\'' + '}', hc.toString());
         }
 
 

@@ -1,7 +1,6 @@
 package Data;
 
-import Data.DataExceptions.BadFormatException;
-import Data.DataExceptions.NullObjectException;
+import Data.Exceptions.*;
 
 /**
  * The personal identifying code in the National Health Service.
@@ -15,21 +14,30 @@ final public class HealthCardID {
         this.personalID = code;
     }
 
-    public String getPersonalID() {
-        return personalID;
+    private boolean codeIsValid(String code){
+        return code.length() == 16 && first4Letters(code) && last12digits(code);
     }
 
-    private boolean codeIsValid(String code){
-        if(code.length() != 16) return false;
-        char [] array = new char[16];
-        code.getChars(0,16, array, 0);
+    private boolean first4Letters(String code){
+        char [] alphabetic = new char[4];
+        code.getChars(0,4, alphabetic, 0);
         for(int i = 0; i < 4; i++){
-            if (!Character.isUpperCase(array[i])) return false;
-        }
-        for(int i = 4; i < 16; i++){
-            if (!Character.isDigit(array[i])) return false;
+            if (!Character.isAlphabetic(alphabetic[i])) return false;
         }
         return true;
+    }
+
+    private boolean last12digits(String code){
+        char [] digit = new char[12];
+        code.getChars(4,16, digit, 0);
+        for(int i = 0; i < 12; i++){
+            if (!Character.isDigit(digit[i])) return false;
+        }
+        return true;
+    }
+
+    public String getPersonalID() {
+        return personalID;
     }
 
     @Override
