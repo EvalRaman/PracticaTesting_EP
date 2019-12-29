@@ -7,4 +7,5 @@ public class Dispensing {
 
     private Date initDate, finalDate;
     private boolean isCompleted;
+
 }

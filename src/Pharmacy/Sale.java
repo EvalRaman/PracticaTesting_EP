@@ -4,10 +4,9 @@ import Data.*;
 import Pharmacy.Exceptions.SaleClosedException;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.function.Consumer;
+
 
 public class Sale {
     private int saleCode;
