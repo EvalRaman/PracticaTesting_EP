@@ -14,7 +14,7 @@ public class NullObjectExceptionTest {
 
     @Test
     public void PatientContNullTest(){
-        assertThrows(NullObjectException.class, () -> {new PatientCont(null);});
+        assertThrows(NullObjectException.class, () -> {new PatientContr(null);});
     }
 
     @Test

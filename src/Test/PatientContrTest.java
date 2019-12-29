@@ -1,6 +1,6 @@
 package Test;
 
-import Data.PatientCont;
+import Data.PatientContr;
 import Data.Exceptions.NullObjectException;
 import org.junit.jupiter.api.*;
 
@@ -8,14 +8,14 @@ import java.math.BigDecimal;
 
 import static org.junit.Assert.*;
 
-public class PatientContTest {
+public class PatientContrTest {
     BigDecimal cont;
-    PatientCont pc;
+    PatientContr pc;
 
     @BeforeEach
     public void setUp() throws NullObjectException{
-        cont = new BigDecimal(253.746481);
-        pc = new PatientCont(cont);
+        cont = new BigDecimal("253.746481");
+        pc = new PatientContr(cont);
     }
 
     @Test
@@ -25,12 +25,12 @@ public class PatientContTest {
 
     @Test
     public void equalsTest() throws NullObjectException{
-        assertEquals(new PatientCont(cont), pc);
+        assertEquals(new PatientContr(cont), pc);
     }
 
     @Test
     public void hashCodeTest() throws NullObjectException{
-        assertEquals(new PatientCont(cont).hashCode(), pc.hashCode());
+        assertEquals(new PatientContr(cont).hashCode(), pc.hashCode());
     }
 
     @Test

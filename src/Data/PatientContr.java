@@ -3,10 +3,10 @@ package Data;
 import java.math.BigDecimal;
 import Data.Exceptions.NullObjectException;
 
-final public class PatientCont {
+final public class PatientContr {
     private final BigDecimal personalCont;
 
-    public PatientCont(BigDecimal contribution) throws NullObjectException{
+    public PatientContr(BigDecimal contribution) throws NullObjectException{
         if(contribution == null) throw new NullObjectException("Contribution is Null.");
         this.personalCont = contribution;
     }
@@ -19,7 +19,7 @@ final public class PatientCont {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PatientCont patientContr = (PatientCont) o;
+        PatientContr patientContr = (PatientContr) o;
         return personalCont.equals(patientContr.personalCont);
     }
     @Override
