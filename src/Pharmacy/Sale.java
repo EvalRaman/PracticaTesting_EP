@@ -9,11 +9,11 @@ import java.util.List;
 
 
 public class Sale {
-    private int saleCode;
-    private Date date;
+    private final int saleCode;
+    private final Date date;
     private BigDecimal amount;
     private boolean isClosed;
-    private List<Line> partial;
+    private List<ProductSaleLine> partial;
 
     public Sale(int saleCode, Date date) {
         this.saleCode=saleCode;
@@ -26,13 +26,13 @@ public class Sale {
         if(isClosed) {
             throw new SaleClosedException("The sale is closed");
         }
-        Line line = new Line(prodID, price, contr);
+        ProductSaleLine line = new ProductSaleLine(prodID, price, contr);
         partial.add(line);
     }
 
     private void calculateAmount() {
-        for (Line d : partial)
-            amount = amount.add(d.price);
+        for (ProductSaleLine d : partial)
+            amount = amount.add(d.price.multiply(d.contr.getPersonalCont()));
     }
 
     private void addTaxes() throws SaleClosedException {
@@ -62,14 +62,20 @@ public class Sale {
         return isClosed;
     }
 
-    public static class Line {
+    public static class ProductSaleLine {
         ProductID prodID;
         BigDecimal price;
         PatientContr contr;
 
-        Line(ProductID prodID, BigDecimal price, PatientContr contr) {
+        ProductSaleLine(ProductID prodID, BigDecimal price, PatientContr contr) {
             this.prodID = prodID;
             this.price = price;
+            this.contr = contr;
+        }
+
+        ProductSaleLine(ProductSpecification product, PatientContr contr) {
+            this.prodID = product.UPCcode;
+            this.price = product.getPrice();
             this.contr = contr;
         }
     }

@@ -6,13 +6,14 @@ import Pharmacy.Exceptions.DispensingNotAvailableException;
 import java.util.Date;
 
 public class Dispensing {
-    private byte nOrder;
+    private final byte nOrder;
 
-    private Date initDate, finalDate;
+    private final Date initDate, finalDate;
     private boolean isCompleted;
 
-    public Dispensing() {
-
+    public Dispensing(byte nOrder, Date initDate, Date finalDate) {
+        this.nOrder = nOrder;
+        this.initDate = initDate;
     }
 
     public boolean dispensingEnabled() throws DispensingNotAvailableException {

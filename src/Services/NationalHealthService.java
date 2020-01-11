@@ -21,6 +21,4 @@ public interface NationalHealthService {
     List<Dispensing> updateePrescription(HealthCardID hcID, Dispensing disp)
             throws ConnectException;
 
-    HealthCardID getHealthCardID() throws HealthCardException;
-
 }
