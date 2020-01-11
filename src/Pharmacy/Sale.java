@@ -72,11 +72,5 @@ public class Sale {
             this.price = price;
             this.contr = contr;
         }
-
-        ProductSaleLine(ProductSpecification product, PatientContr contr) {
-            this.prodID = product.UPCcode;
-            this.price = product.getPrice();
-            this.contr = contr;
-        }
     }
 }

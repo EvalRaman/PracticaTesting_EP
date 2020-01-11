@@ -5,7 +5,7 @@ import Data.ProductID;
 import java.math.BigDecimal;
 
 public class ProductSpecification {
-    final ProductID UPCcode;
+    public final ProductID UPCcode;
     private final String description;
     private final BigDecimal price;
 
