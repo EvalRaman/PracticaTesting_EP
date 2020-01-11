@@ -3,7 +3,7 @@ package Data;
 import java.math.BigDecimal;
 import Data.Exceptions.NullObjectException;
 
-final public class PatientContr {
+final public class PatientContr{
     private final BigDecimal personalCont;
 
     public PatientContr(BigDecimal contribution) throws NullObjectException{

@@ -4,6 +4,7 @@ import Data.*;
 import Pharmacy.Exceptions.SaleClosedException;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,13 +14,14 @@ public class Sale {
     private final Date date;
     private BigDecimal amount;
     private boolean isClosed;
-    private List<ProductSaleLine> partial;
+    public List<ProductSaleLine> partial;
 
     public Sale(int saleCode, Date date) {
         this.saleCode=saleCode;
         this.date=date;
         this.amount= new BigDecimal("0");
         this.isClosed=false;
+        this.partial = new ArrayList<>();
     }
 
     public void addLine(ProductID prodID, BigDecimal price, PatientContr contr) throws SaleClosedException {
@@ -48,6 +50,7 @@ public class Sale {
         }
         calculateAmount();
         addTaxes();
+        setClosed();
     }
 
     public BigDecimal getAmount() {
@@ -61,6 +64,7 @@ public class Sale {
     public boolean isClosed() {
         return isClosed;
     }
+
 
     private static class ProductSaleLine {
         ProductID prodID;

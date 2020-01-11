@@ -3,7 +3,7 @@ package Data;
 import Data.Exceptions.BadFormatException;
 import Data.Exceptions.NullObjectException;
 
-final public class ProductID {
+final public class ProductID{
     private final String UPC;
 
     public ProductID(String code) throws NullObjectException, BadFormatException{
@@ -11,7 +11,6 @@ final public class ProductID {
         if(!codeIsValid(code)) throw new BadFormatException("UPC code length is less than 12.");
         this.UPC = code;
     }
-
 
     private boolean codeIsValid(String code){
         return code.length() == 12;

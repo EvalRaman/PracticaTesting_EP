@@ -13,13 +13,14 @@ public class Dispensing {
 
     private final Date initDate, finalDate;
     private boolean isCompleted;
-    public List<MedicineDispensingLine> medicines = new ArrayList<>();
+    public List<MedicineDispensingLine> medicines;
 
 
     public Dispensing(byte nOrder, Date initDate, Date finalDate, List<ProductSpecification> medicines) {
         this.nOrder = nOrder;
         this.initDate = initDate;
         this.finalDate = finalDate;
+        this.medicines = new ArrayList<>();
         for(ProductSpecification p : medicines){
             this.medicines.add(new MedicineDispensingLine(p));
         }
