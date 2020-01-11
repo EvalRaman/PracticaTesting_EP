@@ -1,8 +1,11 @@
-package Test.ExceptionsTest;
+package Test.Data.ExceptionsTest;
 
 import Data.Exceptions.NullObjectException;
-import Data.*;
+import Data.HealthCardID;
+import Data.PatientContr;
+import Data.ProductID;
 import org.junit.Test;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class NullObjectExceptionTest {

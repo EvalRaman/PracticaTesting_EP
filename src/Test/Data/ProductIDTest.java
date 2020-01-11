@@ -1,9 +1,12 @@
-package Test;
+package Test.Data;
 
+import Data.Exceptions.BadFormatException;
+import Data.Exceptions.NullObjectException;
 import Data.ProductID;
-import Data.Exceptions.*;
-import org.junit.jupiter.api.*;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class ProductIDTest {
     ProductID product;

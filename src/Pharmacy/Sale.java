@@ -62,7 +62,7 @@ public class Sale {
         return isClosed;
     }
 
-    public static class ProductSaleLine {
+    private static class ProductSaleLine {
         ProductID prodID;
         BigDecimal price;
         PatientContr contr;

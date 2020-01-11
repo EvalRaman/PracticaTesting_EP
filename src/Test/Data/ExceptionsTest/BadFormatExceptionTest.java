@@ -1,9 +1,10 @@
-package Test.ExceptionsTest;
+package Test.Data.ExceptionsTest;
 
 import Data.Exceptions.BadFormatException;
 import Data.HealthCardID;
 import Data.ProductID;
 import org.junit.Test;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BadFormatExceptionTest {

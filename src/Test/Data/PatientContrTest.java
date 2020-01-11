@@ -1,12 +1,13 @@
-package Test;
+package Test.Data;
 
-import Data.PatientContr;
 import Data.Exceptions.NullObjectException;
-import org.junit.jupiter.api.*;
+import Data.PatientContr;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class PatientContrTest {
     BigDecimal cont;
