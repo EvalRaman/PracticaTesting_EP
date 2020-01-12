@@ -65,6 +65,7 @@ public class Sale {
         return isClosed;
     }
 
+    public ProductID getProductID(int index){ return this.partial.get(index).prodID;}
 
     private static class ProductSaleLine {
         ProductID prodID;
