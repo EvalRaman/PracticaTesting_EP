@@ -10,15 +10,11 @@ import java.util.List;
 
 
 public class Sale {
-    private final int saleCode;
-    private final Date date;
     private BigDecimal amount;
     private boolean isClosed;
     public List<ProductSaleLine> partial;
 
     public Sale(int saleCode, Date date) {
-        this.saleCode=saleCode;
-        this.date=date;
         this.amount= new BigDecimal("0");
         this.isClosed=false;
         this.partial = new ArrayList<>();

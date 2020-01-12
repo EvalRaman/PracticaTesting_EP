@@ -1,10 +1,11 @@
 package Pharmacy;
 
 import Data.ProductID;
+import Pharmacy.Exceptions.ProductNotInDispensingException;
 import Pharmacy.Exceptions.*;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -13,16 +14,16 @@ public class Dispensing {
 
     private final Date initDate, finalDate;
     private boolean isCompleted;
-    public List<MedicineDispensingLine> medicines;
+    public HashMap<ProductID,MedicineDispensingLine> medicines;
 
 
     public Dispensing(byte nOrder, Date initDate, Date finalDate, List<ProductSpecification> medicines) {
         this.nOrder = nOrder;
         this.initDate = initDate;
         this.finalDate = finalDate;
-        this.medicines = new ArrayList<>();
+        this.medicines = new HashMap<>();
         for(ProductSpecification p : medicines){
-            this.medicines.add(new MedicineDispensingLine(p));
+            this.medicines.put(p.UPCcode,new MedicineDispensingLine(p));
         }
     }
 
@@ -34,19 +35,23 @@ public class Dispensing {
         return initDate.before(now) && finalDate.after(now);
     }
 
-    public void setProductAsDispensed(ProductID prodID) throws DispensingNotAvailableException {
+    public void setProductAsDispensed(ProductID prodID) throws DispensingNotAvailableException, ProductNotInDispensingException {
         if(dispensingEnabled()) {
-            for (MedicineDispensingLine i : medicines) {
+            if(this.medicines.get(prodID) == null){
+                throw new ProductNotInDispensingException("404 product not found in dispensing");
+            }
+            for (MedicineDispensingLine i : medicines.values()) {
                 if (i.product.UPCcode == prodID) {
                     i.acquired = true;
                 }
             }
+
         }
     }
 
     public void setCompleted() throws DispensingNotCompletedException, DispensingNotAvailableException{
         if(dispensingEnabled()) {
-            for (MedicineDispensingLine i : medicines)
+            for (MedicineDispensingLine i : medicines.values())
                 if (!i.acquired) {
                     throw new DispensingNotCompletedException("More to dispense.\n");
                 }
@@ -54,8 +59,8 @@ public class Dispensing {
         }
     }
 
-    public boolean getAcquired(int index){
-        return this.medicines.get(index).acquired;
+    public boolean getAcquired(ProductID key){
+        return this.medicines.get(key).acquired;
     }
 
     public boolean getIsCompleted(){
@@ -71,5 +76,10 @@ public class Dispensing {
             this.product = product;
             this.acquired = false;
         }
+        MedicineDispensingLine(ProductSpecification product, boolean acquired){
+            this.product = product;
+            this.acquired = acquired;
+        }
+
     }
 }

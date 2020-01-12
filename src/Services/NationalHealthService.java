@@ -1,6 +1,7 @@
 package Services;
 
 import Data.*;
+import DispensingTerminal.Exceptions.ProductNotFoundException;
 import Pharmacy.*;
 import Services.Exceptions.*;
 
@@ -16,7 +17,7 @@ public interface NationalHealthService {
     PatientContr getPatientContr(HealthCardID hcID) throws ConnectException;
 
     ProductSpecification getProductSpecific(ProductID pID)
-            throws ProductIDException, ConnectException;
+            throws ProductIDException, ConnectException, ProductNotFoundException;
 
     List<Dispensing> updateePrescription(HealthCardID hcID, Dispensing disp)
             throws ConnectException;

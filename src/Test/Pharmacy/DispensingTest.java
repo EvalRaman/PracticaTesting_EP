@@ -8,13 +8,15 @@ import Pharmacy.Exceptions.*;
 import Pharmacy.ProductSpecification;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.Assert.assertEquals;
+
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static org.junit.Assert.*;
 
 public class DispensingTest {
 
@@ -38,32 +40,32 @@ public class DispensingTest {
 
     @Test
     public void dispensingEnabledTest() throws DispensingNotAvailableException {
-        assertEquals(true, dispense.dispensingEnabled());
+        assertTrue(dispense.dispensingEnabled());
     }
 
     @Test
-    public void setProductAsDispensedTest() throws DispensingNotAvailableException, DispensingNotCompletedException {
+    public void setProductAsDispensedTest() throws DispensingNotAvailableException, ProductNotInDispensingException {
         dispense.setProductAsDispensed(product1.UPCcode);
-        assertEquals(true, dispense.getAcquired(0));
+        assertTrue(dispense.getAcquired(product1.UPCcode));
     }
 
     @Test
-    public void setCompletedTest() throws DispensingNotAvailableException, DispensingNotCompletedException {
+    public void setCompletedTest() throws DispensingNotAvailableException, DispensingNotCompletedException, ProductNotInDispensingException {
         dispense.setProductAsDispensed(product1.UPCcode);
         dispense.setProductAsDispensed(product2.UPCcode);
         dispense.setProductAsDispensed(product3.UPCcode);
         dispense.setCompleted();
-        assertEquals(true, dispense.getIsCompleted());
+        assertTrue(dispense.getIsCompleted());
     }
 
     @Test
     public void getAcquiredTest(){
-        assertEquals(false, dispense.getAcquired(0));
+        assertFalse(dispense.getAcquired(product1.UPCcode));
     }
 
     @Test
     public void getIsCompletedTest(){
-        assertEquals(false, dispense.getIsCompleted());
+        assertFalse(dispense.getIsCompleted());
     }
 
 
