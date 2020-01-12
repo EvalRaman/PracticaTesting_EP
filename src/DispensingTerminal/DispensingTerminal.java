@@ -17,10 +17,10 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 
-public class DispensingTerminal {
+public class DispensingTerminal{
 
-    private HealthCardID hCardID;
-    private Dispensing disp;
+    public HealthCardID hCardID;
+    public Dispensing disp;
     private Sale sale;
     BigDecimal price;
     private int saleCode;
