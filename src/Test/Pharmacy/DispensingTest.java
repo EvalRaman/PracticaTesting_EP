@@ -59,8 +59,9 @@ public class DispensingTest {
     }
 
     @Test
-    public void getAcquiredTest(){
-        assertFalse(dispense.getAcquired(product1.UPCcode));
+    public void getAcquiredTest() throws DispensingNotAvailableException, ProductNotInDispensingException {
+        dispense.setProductAsDispensed(product1.UPCcode);
+        assertTrue(dispense.getAcquired(product1.UPCcode));
     }
 
     @Test

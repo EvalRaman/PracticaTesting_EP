@@ -22,6 +22,7 @@ final public class PatientContr{
         PatientContr patientContr = (PatientContr) o;
         return personalCont.equals(patientContr.personalCont);
     }
+
     @Override
     public int hashCode() {
         return personalCont.hashCode();

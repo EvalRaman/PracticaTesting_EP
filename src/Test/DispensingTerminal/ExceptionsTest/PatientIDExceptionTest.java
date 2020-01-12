@@ -23,7 +23,7 @@ public class PatientIDExceptionTest {
 
     public static class HealthCardReaderDouble implements HealthCardReader {
 
-        public HealthCardID getHealthCardID() throws HealthCardException, PatientIDException {
+        public HealthCardID getHealthCardID() throws PatientIDException {
             try {
                 return new HealthCardID("125469876321");
             }catch (BadFormatException | NullObjectException e){

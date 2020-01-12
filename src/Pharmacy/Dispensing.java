@@ -1,5 +1,6 @@
 package Pharmacy;
 
+
 import Data.ProductID;
 import Pharmacy.Exceptions.ProductNotInDispensingException;
 import Pharmacy.Exceptions.*;
@@ -67,6 +68,13 @@ public class Dispensing {
         return this.isCompleted;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Dispensing d = (Dispensing) o;
+        return nOrder == d.nOrder;
+    }
 
     private static class MedicineDispensingLine {
         ProductSpecification product;
@@ -75,10 +83,6 @@ public class Dispensing {
         MedicineDispensingLine(ProductSpecification product){
             this.product = product;
             this.acquired = false;
-        }
-        MedicineDispensingLine(ProductSpecification product, boolean acquired){
-            this.product = product;
-            this.acquired = acquired;
         }
 
     }

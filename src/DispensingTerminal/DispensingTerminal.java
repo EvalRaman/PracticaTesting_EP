@@ -21,8 +21,8 @@ public class DispensingTerminal{
 
     public HealthCardID hCardID;
     public Dispensing disp;
-    private Sale sale;
-    BigDecimal price;
+    public Sale sale;
+    public BigDecimal price;
     private int saleCode;
 
     private HealthCardReader HCReader;
@@ -62,7 +62,7 @@ public class DispensingTerminal{
             ProductSpecification prodSpecification = SNS.getProductSpecific(pID);
             PatientContr contr = SNS.getPatientContr(hCardID);
             sale.addLine(pID, prodSpecification.getPrice(), contr);
-            disp.setProductAsDispensed(prodSpecification.UPCcode);
+            disp.setProductAsDispensed(pID);
         } catch (ProductNotFoundException e) {
             throw new ProductNotFoundException("Product not in catalogue");
         } catch (ConnectException e) {
@@ -83,12 +83,7 @@ public class DispensingTerminal{
     }
 
     public void showSale() {
-        System.out.println("The final price is" + price + "\n");
+        System.out.println("The final price is " + price + "\n");
     }
 
-	/*
-	public void realizePayment(BigDecimal quantity) {}
-	public void realizePayment() {}
-	public void printNextDispensingSheet() {}
-	 */
 }

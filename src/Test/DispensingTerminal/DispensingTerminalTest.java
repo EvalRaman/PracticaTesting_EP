@@ -8,8 +8,13 @@ import Data.ProductID;
 import DispensingTerminal.DispensingTerminal;
 import DispensingTerminal.Exceptions.PatientIDException;
 import DispensingTerminal.Exceptions.ProductNotFoundException;
+import DispensingTerminal.Exceptions.SaleNotInitiatedException;
 import Pharmacy.Dispensing;
+import Pharmacy.Exceptions.DispensingNotAvailableException;
+import Pharmacy.Exceptions.ProductNotInDispensingException;
+import Pharmacy.Exceptions.SaleClosedException;
 import Pharmacy.ProductSpecification;
+import Pharmacy.Sale;
 import Services.Exceptions.ConnectException;
 import Services.Exceptions.HealthCardException;
 import Services.Exceptions.NotValidePrescriptionException;
@@ -26,15 +31,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class DispensingTerminalTest {
 
     HCReaderDoble HCReaderDoble;
     NationalHealthServiceDoble SNSDoble;
     Dispensing dispensing;
+    ProductID id1;
+    ProductSpecification product1;
+    Sale sale;
+    PatientContr contr;
 
     DispensingTerminal dp;
 
@@ -45,24 +52,56 @@ public class DispensingTerminalTest {
         Date init_date = simpleDateFormat1.parse ( "1998-12-31" );
         SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
         Date end_date = simpleDateFormat2.parse ( "2020-12-31" );
-        ProductSpecification product1 = new ProductSpecification(new ProductID("123456789012"), "Carn", new BigDecimal(3));
+        List<ProductSpecification> products = new ArrayList<>();
+        id1 = new ProductID("123456789012");
+        product1 = new ProductSpecification(id1, "Carn", new BigDecimal(3));
         ProductSpecification product2 = new ProductSpecification(new ProductID("123456789013"), "Peix", new BigDecimal(6));
         ProductSpecification product3 = new ProductSpecification(new ProductID("123456789014"), "Ous", new BigDecimal(4));
-        List<ProductSpecification> products = new ArrayList<>();
         products.add(product1);
         products.add(product2);
         products.add(product3);
+        contr = new PatientContr(new BigDecimal("0.5"));
         dispensing = new Dispensing(order, init_date, end_date, products);
         HCReaderDoble = new HCReaderDoble();
         SNSDoble = new NationalHealthServiceDoble();
         dp = new DispensingTerminal(0, HCReaderDoble, SNSDoble);
+        sale = new Sale(0, new Date());
     }
 
     @Test
     public void getEPrescriptionTest() throws NotValidePrescriptionException, HealthCardException, PatientIDException, Services.Exceptions.ConnectException {
         dp.getePrescription('c');
-        assertEquals(dp.disp, dispensing);
+        assertTrue(dp.disp.equals(dispensing)); //We consider a Dispensing with same order to be equal to another with that order, order is unique
     }
+
+    @Test
+    public void initNewSaleTest() throws DispensingNotAvailableException, HealthCardException, PatientIDException, ConnectException, NotValidePrescriptionException {
+        dp.getePrescription('c');
+        dp.initNewSale();
+        assertFalse(dp.sale == null);
+    }
+
+    @Test
+    public void enterProductTest() throws DispensingNotAvailableException, HealthCardException, PatientIDException, ConnectException, NotValidePrescriptionException, ProductNotFoundException, ProductNotInDispensingException, SaleNotInitiatedException, ProductIDException, SaleClosedException, NullObjectException {
+        dp.getePrescription('c');
+        dp.initNewSale();
+        dp.enterProduct(id1);
+        assertEquals(dp.sale.getProductID(0), id1);
+    }
+
+    @Test
+    public void finalizeSaleTest() throws HealthCardException, PatientIDException, ConnectException, NotValidePrescriptionException, DispensingNotAvailableException, ProductNotFoundException, ProductNotInDispensingException, SaleNotInitiatedException, ProductIDException, SaleClosedException, NullObjectException {
+        dp.getePrescription('c');
+        dp.initNewSale();
+        dp.enterProduct(id1);
+        dp.finalizeSale();
+        sale.addLine(id1, new BigDecimal("7.234"), new PatientContr(new BigDecimal("0.5")));
+        sale.calculateFinalAmount();
+        assertEquals(dp.price, sale.getAmount());
+    }
+
+
+
 
     private class HCReaderDoble implements HealthCardReader{
 
