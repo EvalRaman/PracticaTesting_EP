@@ -17,8 +17,8 @@ public class PatientIDExceptionTest {
     @Test
     public void PatientIdTest() {
 
-        var healthCardReaderDouble = new HealthCardReaderDouble();
-        assertThrows(PatientIDException.class, healthCardReaderDouble::getHealthCardID);
+        HealthCardReader healthCardReaderDouble = new HealthCardReaderDouble();
+        assertThrows(PatientIDException.class , () -> {healthCardReaderDouble.getHealthCardID();});
     }
 
     public static class HealthCardReaderDouble implements HealthCardReader {
